@@ -370,17 +370,14 @@ char* strSubstr(const char* str1, const char* str2)
 		}
 		else
 		{
-			/*
-			* if the first characters of str1 and str2 don't match, start search again from next character
-			* else start search from the same character
-			*/
-			ptr1 = ptr1 != str1 ? str1 : ++str1;
+			/*start search again from next character*/
+			str1 = ++ptr1;
 			/*return to the start of substring*/
 			str2 = ptr2;
 		}
 	}
-
-	return *ptr1 != TERMINATING_CHAR ? (char*) ptr1 : NULL;
+	
+	return (*ptr1 != TERMINATING_CHAR && *str2 == TERMINATING_CHAR) ? (char*)ptr1 : NULL;
 }
 
 void* memSetValue(void* ptr, int value, size_t num)
