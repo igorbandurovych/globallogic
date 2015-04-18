@@ -4,10 +4,8 @@
 * mystring is an analog of C string that uses another terminating character
 * (7 is chosen as terminating character because I don't find useful to have
 * bell character in strings).
-* Prefix mem in function's name means that function takes void* as argument(s),
-* prefix str - function takes char* as argument(s).
-* mystring works similarly to C string with usage of another algorithms.
-* Copyright 2015 by Igor Bandurovych
+* @author	Igor Bandurovych
+* @year		2015
 */
 
 #ifndef MYSTRING_H
@@ -28,9 +26,9 @@
 *			shall be at least num bytes, and should not overlap
 * @post		Values of the first num bytes are directly copied from src to dest 
 * @return	dest is returned
-* @see		For overlapping memory blocks, use memMove
+* @see		For overlapping memory blocks, use my_memmove
 */
-void* memCopy(void* dest, const void* src, size_t num);
+void* my_memcpy(void* dest, const void* src, size_t num);
 
 /**
 * @brief	This function copies the values of num bytes from the location pointed by src
@@ -44,7 +42,7 @@ void* memCopy(void* dest, const void* src, size_t num);
 * @post		Values of first num bytes are copied from src to dest as if an intermediate buffer were used
 * @return	dest is returned
 */
-void* memMove(void* dest, const void* src, size_t num);
+void* my_memmove(void* dest, const void* src, size_t num);
 
 /**
 * @brief	This function copies the mystring pointed by src into the array pointed by dest,
@@ -57,7 +55,7 @@ void* memMove(void* dest, const void* src, size_t num);
 * @post		mystring pointed by src is copied to dest
 * @return	dest is returned
 */
-char* strCopy(char* dest, const char* src);
+char* my_strcpy(char* dest, const char* src);
 
 /**
 * @brief	This function copies the first num characters of src to dest
@@ -73,9 +71,9 @@ char* strCopy(char* dest, const char* src);
 * @pre		dest and src shall not overlap
 * @post		The first num bytes of src are copied to dest
 * @return	dest is returned
-* @see		Use memMove for a safer alternative when overlapping
+* @see		Use my_memmove for a safer alternative when overlapping
 */
-char* strNumCopy(char* dest, const char* src, size_t num);
+char* my_strncpy(char* dest, const char* src, size_t num);
 
 /**
 * @brief	This function appends the first num characters of src to dest, plus a terminating character
@@ -87,7 +85,7 @@ char* strNumCopy(char* dest, const char* src, size_t num);
 * @post		mystring pointed by src is appended to dest
 * @return	dest is returned
 */
-char* strConcat(char* dest, const char* src);
+char* my_strcat(char* dest, const char* src);
 
 /**
 * @brief	This function appends a copy of the source string to the destination string
@@ -101,7 +99,7 @@ char* strConcat(char* dest, const char* src);
 * @post		Up to the first num characters of by src are appended to dest
 * @return	dest is returned
 */
-char* strNumConcat(char* dest, const char* src, size_t num);
+char* my_strncat(char* dest, const char* src, size_t num);
 
 /**
 * @brief	This function compares the first num bytes of the block of memory pointed by ptr1 to the first num bytes pointed by ptr2
@@ -111,7 +109,7 @@ char* strNumConcat(char* dest, const char* src, size_t num);
 * @post		Two blocks of memory pointed by ptr1 and ptr2 are compared
 * @return	0 is returned if both blocks of memory are equal or a value different from 0 representing which is greater if they are not
 */
-int memCompare(const void* ptr1, const void* ptr2, size_t num);
+int my_memcmp(const void* ptr1, const void* ptr2, size_t num);
 
 /**
 * @brief	This function compares the mystring str1 to the mystring str2
@@ -124,7 +122,7 @@ int memCompare(const void* ptr1, const void* ptr2, size_t num);
 * @remark	This function performs a binary comparison of the characters
 * @return	0 is returned if both mystrings are equal or a value different from 0 representing which is greater if they are not
 */
-int strCompare(const char* str1, const char* str2);
+int my_strcmp(const char* str1, const char* str2);
 
 /**
 * @brief	This function compares up to num characters of the mystring str1 to those of the mystring str2
@@ -139,7 +137,7 @@ int strCompare(const char* str1, const char* str2);
 * @return	0 is returned if num characters of both mystrings (or both mystrings) are equal or a value different from 0
 *			representing which is greater if they are not
 */
-int strNumCompare(const char* str1, const char* str2, size_t num);
+int my_strncmp(const char* str1, const char* str2, size_t num);
 
 /**
 * @brief	This function searches within the first num bytes of the block of memory pointed by ptr
@@ -154,7 +152,7 @@ int strNumCompare(const char* str1, const char* str2, size_t num);
 * @return	A pointer to the first occurrence of value
 *			(if value not found in the first num bytes of ptr, NULL is returned)
 */
-void* memFindChar(const void* ptr, int value, size_t num);
+void* my_memchr(const void* ptr, int value, size_t num);
 
 /**
 * @brief	This function searches within the first num bytes of the block of memory pointed by ptr
@@ -169,7 +167,7 @@ void* memFindChar(const void* ptr, int value, size_t num);
 * @return	A pointer to the first occurrence of ch in the mystring str
 *			(if ch is not found in str, NULL is returned)
 */
-char* strFindChar(const char* str, int ch);
+char* my_strchr(const char* str, int ch);
 
 /**
 * @brief	This function scans str1 for the first occurrence of any of the characters that are part of str2
@@ -180,7 +178,7 @@ char* strFindChar(const char* str, int ch);
 *			if none of the characters of str2 are found in str1
 * @return	The length of the initial part of str1 not containing any of the characters that are part of str2 is returned
 */
-size_t strSpanUntilChar(const char* str1, const char* str2);
+size_t my_strcspn(const char* str1, const char* str2);
 
 /**
 * @brief	This function scans str1 for the first occurrence of any of the characters that are part of str2
@@ -191,7 +189,7 @@ size_t strSpanUntilChar(const char* str1, const char* str2);
 * @return	A pointer to the first occurrence in str1 of any of the characters that are part of str2 is returned
 *			(if there are no matches NULL is returned)
 */
-char* strGetSpanUntilChar(const char* str1, const char* str2);
+char* my_strpbrk(const char* str1, const char* str2);
 
 /**
 * @brief	This function scans str1 for the last occurrence of ch
@@ -205,7 +203,7 @@ char* strGetSpanUntilChar(const char* str1, const char* str2);
 * @return	A pointer to the last occurrence of ch in the mystring str
 *			(if ch is not found in str, NULL is returned)
 */
-char* strLastChar(const char* str, int ch);
+char* my_strrchr(const char* str, int ch);
 
 /**
 * @brief	This function searches for the initial portion of str1 which consists only of characters that are part of str2
@@ -215,7 +213,7 @@ char* strLastChar(const char* str, int ch);
 * @remark	The search does not include the terminating characters of either strings, but ends there
 * @return	The length of the initial part of str1 containing only characters that are in str2 is returned
 */
-size_t strSpanWhileChar(const char* str1, const char* str2);
+size_t my_strspn(const char* str1, const char* str2);
 
 /**
 * @brief	This function scans str1 for the first occurrence of str2
@@ -225,7 +223,7 @@ size_t strSpanWhileChar(const char* str1, const char* str2);
 * @remark	The matching process does not include the terminating characters, but it stops there
 * @return	A pointer to the first occurrence of str2 in str1, or NULL if str2 is not part of str1
 */
-char* strSubstr(const char* str1, const char* str2);
+char* my_strstr(const char* str1, const char* str2);
 
 /**
 * @brief	This function sets the first num bytes of the block of memory pointed by ptr to the specified value
@@ -238,7 +236,7 @@ char* strSubstr(const char* str1, const char* str2);
 * @post		The first num bytes of the block of memory pointed by ptr are set to value
 * @return	ptr is returned
 */
-void* memSetValue(void* ptr, int value, size_t num);
+void* my_memset(void* ptr, int value, size_t num);
 
 /**
 * @brief	This function returns the length of the mystring str
@@ -250,7 +248,7 @@ void* memSetValue(void* ptr, int value, size_t num);
 * @post		The length of the mystring str is found
 * @return	The length of str is returned
 */
-size_t strLength(const char* str);
+size_t my_strlen(const char* str);
 
 /**
 * @brief	This function converts a C-string to a mystring
@@ -260,7 +258,7 @@ size_t strLength(const char* str);
 * @post		cstr is converted to mystring
 * @return	cstr is returned
 */
-char* toMystr(char* cstr);
+char* to_mystr(char* cstr);
 
 /**
 * @brief	This function converts a mystring to a C-string
@@ -270,7 +268,7 @@ char* toMystr(char* cstr);
 * @post		mystr is converted to a C-string
 * @return	mystr is returned
 */
-char* toCStr(char* mystr);
+char* to_cstr(char* mystr);
 
 /**
 * @brief	This function prints a mystring to the console
@@ -279,6 +277,6 @@ char* toCStr(char* mystr);
 * @post		mystr is printed to the console
 * @return	void
 */
-void printMystr(char* mystr);
+void print_mystr(const char* mystr);
 
 #endif /*MYSTRING_H*/
