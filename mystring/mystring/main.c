@@ -10,181 +10,181 @@ void testMystring(void)
 	char str1[40] = "Sample String\a";
 	char str2[40] = "\a";
 	printf("str1 = \"");
-	printMystr(str1);
+	print_mystr(str1);
 	printf("\"\n");
 	printf("str2 = \"");
-	printMystr(str2);
+	print_mystr(str2);
 	printf("\"\n\n");
 
 	puts("Testing memcpy: ");
-	printf("memCopy(str1 + 3, str1, 6) = \"");
-	printMystr(memCopy(str1 + 3, str1, 6));
+	printf("my_memcpy(str1 + 3, str1, 6) = \"");
+	print_mystr(my_memcpy(str1 + 3, str1, 6));
 	printf("\"\n\n");
 
 	puts("Testing strcpy: ");
-	printf("strCopy(str1, str2) = \"");
-	printMystr(strCopy(str1, str2));
+	printf("my_strcpy(str1, str2) = \"");
+	print_mystr(my_strcpy(str1, str2));
 	printf("\"\n");
-	printf("strCopy(str1, \"Sample String\") = \"");
-	printMystr(strCopy(str1, "Sample String\a"));
+	printf("my_strcpy(str1, \"Sample String\") = \"");
+	print_mystr(my_strcpy(str1, "Sample String\a"));
 	printf("\"\n\n");
 
 	puts("Testing memmove: ");
-	printf("memMove(str1 + 3, str1, 6) = \"");
-	printMystr(memMove(str1 + 3, str1, 6));
+	printf("my_memmove(str1 + 3, str1, 6) = \"");
+	print_mystr(my_memmove(str1 + 3, str1, 6));
 	printf("\"\n\n");
 
 	puts("Testing strncpy: ");
-	printf("strNumCopy(str1, str2, 0) = \"");
-	printMystr(strNumCopy(str1, str2, 0));
+	printf("my_strncpy(str1, str2, 0) = \"");
+	print_mystr(my_strncpy(str1, str2, 0));
 	printf("\"\n");
-	printf("strNumCopy(str2, str1, 20) = \"");
-	printMystr(strNumCopy(str2, str1, 20));
+	printf("my_strncpy(str2, str1, 20) = \"");
+	print_mystr(my_strncpy(str2, str1, 20));
 	printf("\"\n\n");
 
 	puts("Testing strcat: ");
-	printf("strConcat(str1, str2) = \"");
-	printMystr(strConcat(str1, str2));
+	printf("my_strcat(str1, str2) = \"");
+	print_mystr(my_strcat(str1, str2));
 	printf("\"\n");
-	printf("strConcat(str1, \"\") = \"");
-	printMystr(strConcat(str1, "\a"));
+	printf("my_strcat(str1, \"\") = \"");
+	print_mystr(my_strcat(str1, "\a"));
 	printf("\"\n\n");
 
 	puts("Testing strncat: ");
-	printf("strNumConcat(str1, str2, 0) = \"");
-	printMystr(strNumConcat(str1, str2, 0));
+	printf("my_strncat(str1, str2, 0) = \"");
+	print_mystr(my_strncat(str1, str2, 0));
 	printf("\"\n");
-	printf("strNumConcat(str1, str2, 3) = \"");
-	printMystr(strNumConcat(str1, str2, 3));
+	printf("my_strncat(str1, str2, 3) = \"");
+	print_mystr(my_strncat(str1, str2, 3));
 	printf("\"\n\n");
 
 	puts("Testing memcmp: ");
-	printf("memCompare(str1, str2, 0) = ");
-	printf("%d", memCompare(str1, str2, 0));
+	printf("my_memcmp(str1, str2, 0) = ");
+	printf("%d", my_memcmp(str1, str2, 0));
 	printf("\n");
-	printf("memCompare(str1, str2, 40) = ");
-	printf("%d", memCompare(str1, str2, 40));
+	printf("my_memcmp(str1, str2, 40) = ");
+	printf("%d", my_memcmp(str1, str2, 40));
 	printf("\n");
-	printf("memCompare(str2, str1, 40) = ");
-	printf("%d", memCompare(str2, str1, 40));
+	printf("my_memcmp(str2, str1, 40) = ");
+	printf("%d", my_memcmp(str2, str1, 40));
 	printf("\n\n");
 
 	puts("Testing strcmp: ");
-	printf("strCompare(str1, str2) = ");
-	printf("%d", strCompare(str1, str2));
+	printf("my_strcmp(str1, str2) = ");
+	printf("%d", my_strcmp(str1, str2));
 	printf("\n");
-	printf("strCompare(str2, \"\") = ");
-	printf("%d", strCompare(str2, "\a"));
+	printf("my_strcmp(str2, \"\") = ");
+	printf("%d", my_strcmp(str2, "\a"));
 	printf("\n\n");
 
 	puts("Testing strncmp: ");
-	printf("strNumCompare(str1, str2, 0) = ");
-	printf("%d", strNumCompare(str1, str2, 0));
+	printf("my_strncmp(str1, str2, 0) = ");
+	printf("%d", my_strncmp(str1, str2, 0));
 	printf("\n");
-	printf("strNumCompare(str1, str2, 40) = ");
-	printf("%d", strNumCompare(str1, str2, 40));
+	printf("my_strncmp(str1, str2, 40) = ");
+	printf("%d", my_strncmp(str1, str2, 40));
 	printf("\n");
-	printf("strNumCompare(str2, str1, 40) = ");
-	printf("%d", strNumCompare(str2, str1, 40));
+	printf("my_strncmp(str2, str1, 40) = ");
+	printf("%d", my_strncmp(str2, str1, 40));
 	printf("\n\n");
 
 	puts("Testing memchr: ");
-	printf("memFindChar(str1, 'z', 0) = \"");
-	printMystr(memFindChar(str1, 'z', 0));
+	printf("my_memchr(str1, 'z', 0) = \"");
+	print_mystr(my_memchr(str1, 'z', 0));
 	printf("\"\n");
-	printf("memFindChar(str1, 'r', 40) = \"");
-	printMystr(memFindChar(str1, 'r', 40));
+	printf("my_memchr(str1, 'r', 40) = \"");
+	print_mystr(my_memchr(str1, 'r', 40));
 	printf("\"\n");
-	printf("memFindChar(str2, 'z', 40) = \"");
-	printMystr(memFindChar(str2, 'z', 40));
+	printf("my_memchr(str2, 'z', 40) = \"");
+	print_mystr(my_memchr(str2, 'z', 40));
 	printf("\"\n\n");
 
 	puts("Testing strchr: ");
-	printf("strFindChar(str1, 'z') = \"");
-	printMystr(strFindChar(str1, 'z'));
+	printf("my_strchr(str1, 'z') = \"");
+	print_mystr(my_strchr(str1, 'z'));
 	printf("\"\n");
-	printf("strFindChar(str1, 'r') = \"");
-	printMystr(strFindChar(str1, 'r'));
+	printf("my_strchr(str1, 'r') = \"");
+	print_mystr(my_strchr(str1, 'r'));
 	printf("\"\n");
-	printf("strFindChar(str2, '\\a') = \"");
-	printMystr(strFindChar(str2, '\a'));
+	printf("my_strchr(str2, '\\a') = \"");
+	print_mystr(my_strchr(str2, '\a'));
 	printf("\"\n\n");
 
 	puts("Testing strcspn: ");
-	printf("strSpanUntilChar(str1, str2) = ");
-	printf("%d", strSpanUntilChar(str1, str2));
+	printf("my_strcspn(str1, str2) = ");
+	printf("%d", my_strcspn(str1, str2));
 	printf("\n");
-	printf("strSpanUntilChar(str1, \"ghb\") = ");
-	printf("%d", strSpanUntilChar(str1, "ghb\a"));
+	printf("my_strcspn(str1, \"ghb\") = ");
+	printf("%d", my_strcspn(str1, "ghb\a"));
 	printf("\n");
-	printf("strSpanUntilChar(str1, \"\\a\") = ");
-	printf("%d", strSpanUntilChar(str1, "\a"));
+	printf("my_strcspn(str1, \"\\a\") = ");
+	printf("%d", my_strcspn(str1, "\a"));
 	printf("\n\n");
 
 	puts("Testing strpbrk: ");
-	printf("strGetSpanUntilChar(str1, str2) = \"");
-	printMystr(strGetSpanUntilChar(str1, str2));
+	printf("my_strpbrk(str1, str2) = \"");
+	print_mystr(my_strpbrk(str1, str2));
 	printf("\"\n");
-	printf("strGetSpanUntilChar(str1, \"ghb\") = \"");
-	printMystr(strGetSpanUntilChar(str1, "ghb\a"));
+	printf("my_strpbrk(str1, \"ghb\") = \"");
+	print_mystr(my_strpbrk(str1, "ghb\a"));
 	printf("\"\n");
-	printf("strGetSpanUntilChar(str1, \"\\a\") = \"");
-	printMystr(strGetSpanUntilChar(str1, "\a"));
+	printf("my_strpbrk(str1, \"\\a\") = \"");
+	print_mystr(my_strpbrk(str1, "\a"));
 	printf("\"\n\n");
 
 	puts("Testing strrchr: ");
-	printf("strLastChar(str1, 'n') = \"");
-	printMystr(strLastChar(str1, 'n'));
+	printf("my_strrchr(str1, 'n') = \"");
+	print_mystr(my_strrchr(str1, 'n'));
 	printf("\"\n");
-	printf("strLastChar(str1, 'S') = \"");
-	printMystr(strLastChar(str1, 'S'));
+	printf("my_strrchr(str1, 'S') = \"");
+	print_mystr(my_strrchr(str1, 'S'));
 	printf("\"\n");
-	printf("strLastChar(str1, '\\a\') = \"");
-	printMystr(strLastChar(str1, '\a'));
+	printf("my_strrchr(str1, '\\a\') = \"");
+	print_mystr(my_strrchr(str1, '\a'));
 	printf("\"\n\n");
 
 	puts("Testing strspn: ");
-	printf("strSpanWhileChar(str1, str2) = ");
-	printf("%d", strSpanWhileChar(str1, str2));
+	printf("my_strspn(str1, str2) = ");
+	printf("%d", my_strspn(str1, str2));
 	printf("\n");
-	printf("strSpanWhileChar(str1, \"gShb\") = ");
-	printf("%d", strSpanWhileChar(str1, "gShb\a"));
+	printf("my_strspn(str1, \"gShb\") = ");
+	printf("%d", my_strspn(str1, "gShb\a"));
 	printf("\n");
-	printf("strSpanWhileChar(str1, \"\\a\") = ");
-	printf("%d", strSpanWhileChar(str1, "\a"));
+	printf("my_strspn(str1, \"\\a\") = ");
+	printf("%d", my_strspn(str1, "\a"));
 	printf("\n\n");
 
 	puts("Testing strstr: ");
-	printf("strSubstr(str1, str2) = \"");
-	printMystr(strSubstr(str1, str2));
+	printf("my_strstr(str1, str2) = \"");
+	print_mystr(my_strstr(str1, str2));
 	printf("\"\n");
-	printf("strSubstr(str1, \"ngSa\") = \"");
-	printMystr(strSubstr(str1, "ngSa\a"));
+	printf("my_strstr(str1, \"ngSa\") = \"");
+	print_mystr(my_strstr(str1, "ngSa\a"));
 	printf("\"\n");
-	printf("strSubstr(str1, \"\\a\") = \"");
-	printMystr(strSubstr(str1, "\a"));
+	printf("my_strstr(str1, \"\\a\") = \"");
+	print_mystr(my_strstr(str1, "\a"));
 	printf("\"\n\n");
 
 	puts("Testing memset: ");
-	printf("memSetValue(str2, '\\a', 0) = \"");
-	printMystr(memSetValue(str2, '\a', 0));
+	printf("my_memset(str2, '\\a', 0) = \"");
+	print_mystr(my_memset(str2, '\a', 0));
 	printf("\"\n");
-	printf("memSetValue(str2, '\\a', 20) = \"");
-	printMystr(memSetValue(str2, '\a', 20));
+	printf("my_memset(str2, '\\a', 20) = \"");
+	print_mystr(my_memset(str2, '\a', 20));
 	printf("\"\n");
-	printf("memSetValue(str1, 'c', 6) = \"");
-	printMystr(memSetValue(str1, 'c', 6));
+	printf("my_memset(str1, 'c', 6) = \"");
+	print_mystr(my_memset(str1, 'c', 6));
 	printf("\"\n\n");
 
 	puts("Testing strlen: ");
-	printf("strLength(str1) = ");
-	printf("%d", strLength(str1));
+	printf("my_strlen(str1) = ");
+	printf("%d", my_strlen(str1));
 	printf("\n");
-	printf("strLength(\"gShb\") = ");
-	printf("%d", strLength("gShb\a"));
+	printf("my_strlen(\"gShb\") = ");
+	printf("%d", my_strlen("gShb\a"));
 	printf("\n");
-	printf("strLength(str2) = ");
-	printf("%d", strLength(str2));
+	printf("my_strlen(str2) = ");
+	printf("%d", my_strlen(str2));
 	printf("\n\n");
 }
 
@@ -296,10 +296,35 @@ void testString(void)
 	printf("\n\n");
 }
 
+#include <time.h>
+
 int main(void)
 {
 	testMystring();
 	testString();
+	char str1[40] = "nnnnnns\a";
+	char str2[40] = "nnnnnns";
+	
+	
+	clock_t start = clock();
+
+	for (size_t i = 0; i < 100000000; ++i)
+	{
+		my_strstr(str1, str1);
+	}
+
+	printf("%d\n", clock() - start);
+
+
+	start = clock();
+
+	for (size_t i = 0; i < 100000000; ++i)
+	{
+		strstr(str2, str2);
+	}
+
+	printf("%d\n", clock() - start);
+
 	system("pause");
 	return 0;
 }
