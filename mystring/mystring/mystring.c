@@ -5,14 +5,20 @@
 * (7 is chosen as terminating character because I don't find useful to have
 * bell character in strings)
 * mystring works similarly to C string with usage of another algorithms.
-* Copyright 2015 by Igor Bandurovych
+* @author	Igor Bandurovych
+* @year		2015
 */
 
 #include "mystring.h"	/**< functions prototypes */
 #include <stdio.h>		/**< printf, putchar*/
 
-void* memCopy(void* dest, const void* src, size_t num)
+void* my_memcpy(void* dest, const void* src, size_t num)
 {
+	if (!num || dest == src)	/* num == 0 */
+	{
+		return dest;	/*nothing to copy*/
+	}
+
 	/* dest and src converted to unsigned char* */
 	unsigned char* destination = (unsigned char*)dest;
 	unsigned char* source = (unsigned char*)src;
@@ -26,8 +32,13 @@ void* memCopy(void* dest, const void* src, size_t num)
 	return dest;
 }
 
-void* memMove(void* dest, const void* src, size_t num)
+void* my_memmove(void* dest, const void* src, size_t num)
 {
+	if (!num || dest == src)	/* num == 0*/
+	{
+		return dest;	/*nothing to move*/
+	}
+
 	/* dest and src converted to unsigned char* */
 	unsigned char* destination = (unsigned char*)dest;
 	unsigned char* source = (unsigned char*)src;
@@ -44,21 +55,26 @@ void* memMove(void* dest, const void* src, size_t num)
 	else
 	{
 		/*overlap is possible, copying memory in reverse order*/
-		destination += num - 1;
-		source += num - 1;
+		destination += num;
+		source += num;
 
 		/*copy num bytes from source to destination*/
 		while (num--)
 		{
-			*destination-- = *source--;
+			*--destination = *--source;
 		}
 	}
 
 	return dest;
 }
 
-char* strCopy(char* dest, const char* src)
+char* my_strcpy(char* dest, const char* src)
 {
+	if (dest == src)
+	{
+		return dest;	/*nothing to move*/
+	}
+
 	char* res = dest;
 
 	/*copying each character from src to dest*/
@@ -73,40 +89,42 @@ char* strCopy(char* dest, const char* src)
 	return res;
 }
 
-char* strNumCopy(char* dest, const char* src, size_t num)
+char* my_strncpy(char* dest, const char* src, size_t num)
 {
+	if (!num || dest == src)	/* num == 0*/
+	{
+		return dest;	/*nothing to copy*/
+	}
+
 	char* res = dest;
 
-	if (num) /*num != 0*/
+	/*while num characters not copied or terminating char in src not reached*/
+	while (num && *src != TERMINATING_CHAR)
 	{
-		/*while num characters not copied or terminating char in src not reached*/
-		while (num && *src != TERMINATING_CHAR)
+		*dest++ = *src++;
+		--num;
+	}
+	/*if terminating char in src reached*/
+	if (*src == TERMINATING_CHAR)
+	{
+		/*padding left characters with TERMINATING_CHAR*/
+		while (num--)
 		{
-			*dest++ = *src++;
-			--num;
-		}
-		/*if terminating char in src reached*/
-		if (*src == TERMINATING_CHAR)
-		{
-			/*padding left characters with TERMINATING_CHAR*/
-			while (num--)
-			{
-				*dest++ = TERMINATING_CHAR;
-			}
+			*dest++ = TERMINATING_CHAR;
 		}
 	}
 
 	return res;
 }
 
-char* strConcat(char* dest, const char* src)
+char* my_strcat(char* dest, const char* src)
 {
 	char* res = dest;
 
 	/*moving pointer to dest to the end of string*/
 	while (*dest != TERMINATING_CHAR)
 	{
-		dest++;
+		++dest;
 	}
 	/*appending all characters from src to dest*/
 	while (*src != TERMINATING_CHAR)
@@ -120,40 +138,43 @@ char* strConcat(char* dest, const char* src)
 	return res;
 }
 
-char* strNumConcat(char* dest, const char* src, size_t num)
+char* my_strncat(char* dest, const char* src, size_t num)
 {
+	if (!num) /* num == 0 */
+	{
+		return dest;	/*nothing to concatenate*/
+	}
+
 	char* res = dest;
 
-	if (num) /*num != 0*/
+	/*moving pointer to dest to the end of string*/
+	while (*dest != TERMINATING_CHAR)
 	{
-		/*moving pointer to dest to the end of string*/
-		while (*dest != TERMINATING_CHAR)
-		{
-			dest++;
-		}
-		/*appending up to num (or all) characters from src to dest*/
-		while (num-- && *src != TERMINATING_CHAR)
-		{
-			*dest++ = *src++;
-		}
-
-		/*appending terminating char to dest*/
-		*dest = TERMINATING_CHAR;
+		++dest;
 	}
+	/*appending up to num (or all) characters from src to dest*/
+	while (num-- && *src != TERMINATING_CHAR)
+	{
+		*dest++ = *src++;
+	}
+
+	/*appending terminating char to dest*/
+	*dest = TERMINATING_CHAR;
 
 	return res;
 }
 
-int memCompare(const void* ptr1, const void* ptr2, size_t num)
+int my_memcmp(const void* ptr1, const void* ptr2, size_t num)
 {
+	if (!num || ptr1 == ptr2) /*num == 0*/
+	{
+		return 0;	/*nothing to compare*/
+	}
+
 	/* ptr1 and ptr2 converted to const unsigned char* */
 	const unsigned char* mem1 = (const unsigned char*)ptr1;
 	const unsigned char* mem2 = (const unsigned char*)ptr2;
 	
-	if (!num) /*num == 0*/
-	{
-		return 0;
-	}
 	/*comparing up to num bytes*/
 	while (--num && *mem1 == *mem2)
 	{
@@ -166,11 +187,16 @@ int memCompare(const void* ptr1, const void* ptr2, size_t num)
 	*if ptr1 and ptr2 are equal, 0 is returned
 	*if ptr1 is greater than ptr2, 1 is returned
 	*/
-	return (*mem1 < *mem2) ? -1 : *mem1 > *mem2;
+	return *mem1 - *mem2;
 }
 
-int strCompare(const char* str1, const char* str2)
+int my_strcmp(const char* str1, const char* str2)
 {
+	if (str1 == str2)
+	{
+		return 0;	/*string is equal to itself*/
+	}
+
 	/*while characters from str1 and str2 are equal and one of the characters is not terminating*/
 	while (*str1 == *str2 && *str1 != TERMINATING_CHAR)
 	{
@@ -183,14 +209,14 @@ int strCompare(const char* str1, const char* str2)
 	* if str1 and str2 are equal, 0 is returned
 	* if str1 is greater than str2, 1 is returned
 	*/
-	return (*str1 < *str2) ? -1 : *str1 > *str2;;
+	return *str1 - *str2;
 }
 
-int strNumCompare(const char* str1, const char* str2, size_t num)
+int my_strncmp(const char* str1, const char* str2, size_t num)
 {
-	if (!num)	/*num == 0*/
+	if (!num || str1 == str2)	/*num == 0*/
 	{
-		return 0;
+		return 0;	/*nothing to compare*/
 	}
 
 	/*while up to num characters from str1 and str2 are equal and one of the characters is not terminating*/
@@ -205,11 +231,16 @@ int strNumCompare(const char* str1, const char* str2, size_t num)
 	* if str1 and str2 are equal, 0 is returned
 	* if str1 is greater than str2, 1 is returned
 	*/
-	return (*str1 < *str2) ? -1 : *str1 > *str2;
+	return *str1 - *str2;
 }
 
-void* memFindChar(const void* ptr, int value, size_t num)
+void* my_memchr(const void* ptr, int value, size_t num)
 {
+	if (!num)	/* num == 0*/
+	{
+		return NULL;	/*no chars in empty block*/
+	}
+
 	/*ptr converted to const unsigned char*/
 	const unsigned char* mem = (const unsigned char*)ptr;
 	/*value converted to unsigned char*/
@@ -218,13 +249,13 @@ void* memFindChar(const void* ptr, int value, size_t num)
 	/*while up to num bytes from ptr are scanned and value not found*/
 	while (num-- && *mem != val)
 	{
-		mem++;
+		++mem;
 	}
 
 	return (*mem == val) ? (unsigned char*) mem : NULL;
 }
 
-char* strFindChar(const char* str, int ch)
+char* my_strchr(const char* str, int ch)
 {
 	/*ch converted to char*/
 	char value = (char) ch;
@@ -238,29 +269,28 @@ char* strFindChar(const char* str, int ch)
 	return (*str == value) ? (char*) str : NULL;
 }
 
-size_t strSpanUntilChar(const char* str1, const char* str2)
+size_t my_strcspn(const char* str1, const char* str2)
 {
 	/*result*/
-	size_t res = 0;
+	const char* res = str1;
 	/*pointer to character from str2 to match*/
 	const char* ch;
 
 	/*while end of str1 not reached*/
-	while (*str1 != TERMINATING_CHAR)
+	while (*res != TERMINATING_CHAR)
 	{
 		/*first character of str2*/
 		ch = str2;
 		
 		/*while characters from str2 not found in str1*/
-		while (*ch != TERMINATING_CHAR && *ch != *str1)
+		while (*ch != TERMINATING_CHAR && *ch != *res)
 		{
-			ch++;
+			++ch;
 		}
 		/*characters from str2 not found yet*/
 		if (*ch == TERMINATING_CHAR)
 		{
-			str1++;
-			res++;
+			++res;
 		}
 		else /*the first appearance of characters from str2*/
 		{
@@ -268,10 +298,10 @@ size_t strSpanUntilChar(const char* str1, const char* str2)
 		}
 	}
 
-	return res;
+	return res - str1;
 }
 
-char* strGetSpanUntilChar(const char* str1, const char* str2)
+char* my_strpbrk(const char* str1, const char* str2)
 {
 	/*pointer to character from str2 to match*/
 	const char* ch;
@@ -284,13 +314,13 @@ char* strGetSpanUntilChar(const char* str1, const char* str2)
 		/*while characters from str2 not found in str1*/
 		while (*ch != TERMINATING_CHAR && *ch != *str1)
 		{
-			ch++;
+			++ch;
 		}
 		
 		/*an appearance of characters from str2*/
 		if (*ch == TERMINATING_CHAR)
 		{
-			str1++;
+			++str1;
 		}
 		else /*the first character that does not match any of chars from str2*/
 		{
@@ -301,7 +331,7 @@ char* strGetSpanUntilChar(const char* str1, const char* str2)
 	return (*str1 != TERMINATING_CHAR) ? (char*) str1 : NULL;
 }
 
-char* strLastChar(const char* str, int ch)
+char* my_strrchr(const char* str, int ch)
 {
 	/*result*/
 	const char* res = str;
@@ -322,27 +352,26 @@ char* strLastChar(const char* str, int ch)
 	return (*res == value) ? (char*) res : NULL;
 }
 
-size_t strSpanWhileChar(const char* str1, const char* str2)
+size_t my_strspn(const char* str1, const char* str2)
 {
 	/*result*/
-	size_t res = 0;
+	const char* res = str1;
 	/*pointer to character from str2 to match*/
 	const char* ch = str2;
 
 	/*while end of str1 not reached*/
-	while (*str1 != TERMINATING_CHAR)
+	while (*res != TERMINATING_CHAR)
 	{
 		/*while characters from str2 not found in str1*/
-		while (*ch != TERMINATING_CHAR && *ch != *str1)
+		while (*ch != TERMINATING_CHAR && *ch != *res)
 		{
-			ch++;
+			++ch;
 		}
 
 		/*an appearance of characters from str2*/
 		if (*ch != TERMINATING_CHAR)
 		{
-			str1++;
-			res++;
+			++res;
 			ch = str2;
 		}
 		else /*the first character that does not match any of chars from str2*/
@@ -350,14 +379,19 @@ size_t strSpanWhileChar(const char* str1, const char* str2)
 			break;
 		}
 	}
-	return res;
+	return res - str1;
 }
 
-char* strSubstr(const char* str1, const char* str2)
+char* my_strstr(const char* str1, const char* str2)
 {
+	if (str1 == str2)
+	{
+		return str1;	/*a string is a substring of itself*/
+	}
+
 	/*result*/
 	const char* ptr1 = str1;
-	/*pointer to the beginnig of str2*/
+	/*pointer to the begining of str2*/
 	const char* ptr2 = str2;
 
 	/*while end of both ptrs not reached*/
@@ -366,7 +400,7 @@ char* strSubstr(const char* str1, const char* str2)
 		/*characters match*/
 		if (*str1 == *str2++)
 		{
-			str1++;
+			++str1;
 		}
 		else
 		{
@@ -380,8 +414,13 @@ char* strSubstr(const char* str1, const char* str2)
 	return (*ptr1 != TERMINATING_CHAR && *str2 == TERMINATING_CHAR) ? (char*)ptr1 : NULL;
 }
 
-void* memSetValue(void* ptr, int value, size_t num)
+void* my_memset(void* ptr, int value, size_t num)
 {
+	if (!num)	/* num == 0*/
+	{
+		return ptr;	/*nothing to set*/
+	}
+	
 	/*ptr converted to unsigned char**/
 	unsigned char* res = (unsigned char*) ptr;
 	/*value converted to unsigned char*/
@@ -390,27 +429,26 @@ void* memSetValue(void* ptr, int value, size_t num)
 	/*setting num bytes to value*/
 	while (num--)
 	{
-		*res++ = (unsigned char) value;
+		*res++ = val;
 	}
 
 	return ptr;
 }
 
-size_t strLength(const char* str)
+size_t my_strlen(const char* str)
 {
-	/*result*/
-	size_t res = 0;
-	
+	const char* res = str;
+
 	/*while terminating character not reached*/
-	while (*str++ != TERMINATING_CHAR)
+	while (*res != TERMINATING_CHAR)
 	{
-		res++;
+		++res;
 	}
 
-	return res;
+	return res - str;
 }
 
-char* toMystr(char* cstr)
+char* to_mystr(char* cstr)
 {
 	/*result*/
 	char* res = cstr;
@@ -425,7 +463,7 @@ char* toMystr(char* cstr)
 	return res;
 }
 
-char* toCStr(char* mystr)
+char* to_cstr(char* mystr)
 {
 	/*result*/
 	char* res = mystr;
@@ -440,14 +478,20 @@ char* toCStr(char* mystr)
 	return res;
 }
 
-void printMystr(char* mystr)
+void print_mystr(const char* mystr)
 {
 	if (mystr)
 	{
-		while (*mystr != TERMINATING_CHAR)
+		char* end = (char*) mystr;
+		while (*end != TERMINATING_CHAR)
 		{
-			putchar(*mystr++);
+			++end;
 		}
+		/*terminating char in C-string*/
+		*end = '\0';
+		printf(mystr);
+		/*returning to previous value*/
+		*end = TERMINATING_CHAR;
 	}
 	else
 	{
