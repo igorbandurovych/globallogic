@@ -302,12 +302,12 @@ char* my_strpbrk(const char* str1, const char* str2)
 			++ch;
 		}
 		
-		/*an appearance of characters from str2*/
+		/*any of characters from str2 not found yet*/
 		if (*ch == TERMINATING_CHAR)
 		{
 			++str1;
 		}
-		else /*the first character that does not match any of chars from str2*/
+		else /*the first character that matches any of chars from str2*/
 		{
 			break;
 		}
