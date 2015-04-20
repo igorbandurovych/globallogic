@@ -72,7 +72,7 @@ char* my_strcpy(char* dest, const char* src)
 {
 	if (dest == src)
 	{
-		return dest;	/*nothing to move*/
+		return dest;	/*nothing to copy*/
 	}
 
 	char* res = dest;
@@ -182,11 +182,6 @@ int my_memcmp(const void* ptr1, const void* ptr2, size_t num)
 		++mem2;
 	}
 
-	/*
-	*if memory pointed by ptr1 lesser than ptr2, -1 is returned
-	*if ptr1 and ptr2 are equal, 0 is returned
-	*if ptr1 is greater than ptr2, 1 is returned
-	*/
 	return *mem1 - *mem2;
 }
 
@@ -204,11 +199,6 @@ int my_strcmp(const char* str1, const char* str2)
 		++str2;
 	}
 
-	/**
-	* if str1 lesser than str2, -1 is returned
-	* if str1 and str2 are equal, 0 is returned
-	* if str1 is greater than str2, 1 is returned
-	*/
 	return *str1 - *str2;
 }
 
@@ -226,11 +216,6 @@ int my_strncmp(const char* str1, const char* str2, size_t num)
 		++str2;
 	}
 
-	/*
-	* if str1 lesser than str2, -1 is returned
-	* if str1 and str2 are equal, 0 is returned
-	* if str1 is greater than str2, 1 is returned
-	*/
 	return *str1 - *str2;
 }
 
